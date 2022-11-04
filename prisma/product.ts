@@ -30,7 +30,18 @@ const getAllProducts = async () => {
     return products
 }
 
+const getProductById = async (id : string) => {
+    const db = new PrismaClient()
+    const res = await db.product.findFirst({
+        where: {
+            id
+        }
+    })
+    return res
+}
+
 export const ProductRepository = {
     getProductsBySeller,
-    getAllProducts
+    getAllProducts,
+    getProductById
 }
