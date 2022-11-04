@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,4 +5,20 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model product {
+  id          String  @id(map: "product_pk") @db.Uuid
+  name        String?
+  price       Float?
+  description String?
+  image       String?
+  seller_id   String? @db.Uuid
+  seller      seller? @relation(fields: [seller_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "product_seller_id_fk")
+}
+
+model seller {
+  id      String    @id(map: "seller_pk") @db.Uuid
+  name    String?
+  product product[]
 }
