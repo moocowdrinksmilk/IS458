@@ -4,13 +4,14 @@ import axios from "axios"
 import Image from 'next/image'
 import { useState } from "react"
 
-const Product = (item: product) => {
+const SellerProduct = (item: product) => {
     const [modal, setModal] = useState(false)
 
     const buy = async () => {
-        await axios.post(`/api/product/buy`, {
-            productId: item.id,
-            quantity: 1
+        console.log(item);
+        
+        await axios.post(`/api/product/seller/add`, {
+            id: item.id,
         })
     }
 
@@ -26,7 +27,7 @@ const Product = (item: product) => {
                     className="px-4 py-2 rounded-lg bg-yellow-400"
                     onClick={buy}
                 >
-                    Buy Now!
+                    Approve!
                 </button>
             </Modal>
             <div className="p4 bg-white rounded-lg col gap-4 cursor-pointer"
@@ -52,4 +53,4 @@ const Product = (item: product) => {
     )
 }
 
-export default Product
+export default SellerProduct

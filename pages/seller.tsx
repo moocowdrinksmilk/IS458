@@ -1,14 +1,16 @@
 import { Message } from "@aws-sdk/client-sqs"
 import { product } from "@prisma/client"
 import axios from "axios"
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
+import Product from "../components/Product"
+import SellerProduct from "../components/SellerProduct"
 
 const Seller = () => {
     const [products, setProducts] = useState<product[]>([])
 
     useEffect(() => {
         const poll = async () => {
-            const res = await axios.get<{products: product[]}>(`/api/product/seller/poll`)
+            const res = await axios.get<{ products: product[] }>(`/api/product/seller/poll`)
             return res.data.products
         }
         const intervalId = setInterval(() => {
@@ -18,7 +20,7 @@ const Seller = () => {
                 }
                 setProducts(() => [...res])
             })
-        }, 10000)
+        }, 1000)
 
         return () => clearInterval(intervalId)
 
@@ -36,13 +38,17 @@ const Seller = () => {
                 {
                     products &&
                     products.length > 0 &&
-                    products.map(item => {
+                    products.map((item, index) => {
                         return (
-                            <div>
-                                {
-                                    item.name
-                                }
-                            </div>
+                            //@ts-ignore
+                            <SellerProduct
+                            key={index}
+                                id={item.id}
+                                name={item.name}
+                                price={item.price}
+                                description={item.description}
+                                image={item.image}
+                            />
                         )
                     })
                 }

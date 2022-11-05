@@ -22,3 +22,8 @@ model seller {
   name    String?
   product product[]
 }
+
+model sold {
+  id         Int     @id(map: "sold_pk")
+  product_id String? @db.Uuid
+}

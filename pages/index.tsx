@@ -41,7 +41,9 @@ const Home: NextPage = () => {
                         products && products.length > 0 &&
                         products.map((item, index) => {
                             return (
+                                // @ts-ignore
                                 <Product 
+                                key={index}
                                     id={item.id}
                                     name={item.name}
                                     price={item.price}
